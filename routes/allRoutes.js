@@ -4,7 +4,7 @@ const router = new express.Router();
 var natural = require("natural");
 var tokenizer = new natural.WordTokenizer();
 
-const tf = require("@tensorflow/tfjs");
+//const tf = require("@tensorflow/tfjs");
 //const { tanh } = require("@tensorflow/tfjs");
 const tf = require("@tensorflow/tfjs-node");
 
