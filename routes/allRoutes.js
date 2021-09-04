@@ -288,18 +288,21 @@ router.post("/message", async (req, res) => {
   bag_of_words(input_message["message"], all_words).then(async (val) => {
     word_bag = val;
     console.log(word_bag);
+    var predict_tensor = tf.tensor([word_bag]);
     try {
       const Loadedmodel = await tf.loadLayersModel(
         "file:///tmp/my-model-1/model.json"
       );
-      Loadedmodel.predict(test);
+      console.log(Loadedmodel.predict(predict_tensor).print());
+      var predictions = Loadedmodel.predict(predict_tensor);
+      tf.max(predictions).print()
       console.log("Predicted!");
     } catch (e) {
       console.log("Model loading failed");
       console.log(e);
 
       trainModel().then(async () => {
-        var predict_tensor = tf.tensor([word_bag]);
+        
 
         try {
           console.log(model.predict(predict_tensor).print());
