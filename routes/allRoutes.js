@@ -211,7 +211,12 @@ router.post("/message", async (req, res) => {
       console.log("Model loading failed")
       console.log(e)
     trainModel().then( async () => {
-        await model.save('file:///tmp/my-model-1');
+        try{
+            await model.save('file:///tmp/my-model-1');
+        }catch(e){
+            console.log(e)
+        }
+        
   });
 }
 }
