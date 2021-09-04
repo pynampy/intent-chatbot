@@ -1,6 +1,4 @@
 const express = require('express');
-const logger = require('morgan');
-const cors = require('cors');
 const tf = require("@tensorflow/tfjs");
 const app = express();
 
