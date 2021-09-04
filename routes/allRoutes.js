@@ -206,7 +206,7 @@ const test = tf.tensor([
 router.post("/message", upload.single("file"), async (req, res) => {
   try {
     const Loadedmodel = await tf.loadLayersModel("file:///tmp/my-model-1");
-    Loadedmodel.predict(test);
+    Loadedmodel.predict(test)
   } catch {
     trainModel().then( async () => {
         await model.save('file:///tmp/my-model-1');
