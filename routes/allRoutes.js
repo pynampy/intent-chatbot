@@ -203,7 +203,7 @@ const test = tf.tensor([
   ],
 ]);
 
-router.post("/message", upload.single("file"), async (req, res) => {
+router.post("/message", async (req, res) => {
   try {
     const Loadedmodel = await tf.loadLayersModel("file:///tmp/my-model-1");
     Loadedmodel.predict(test)
