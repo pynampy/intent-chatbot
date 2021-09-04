@@ -213,8 +213,9 @@ router.post("/message", async (req, res) => {
     trainModel().then( async () => {
         try{
             console.log('Trying to save model');
-            await model.save('file:///tmp/my-model-1');
-            console.log('Model saved');
+            model.save('file:///tmp/my-model-1').then(()=>{
+                console.log('Model saved');
+            });
         }catch(e){
             console.log("Model not saved")
             console.log(e)
