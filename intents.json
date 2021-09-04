@@ -1,0 +1,68 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": [
+        "hi",
+        "hello",
+        "whats up",
+        "sup",
+        "is anyone there",
+        "whats good",
+        "hey"
+      ],
+      "responses": [
+        "Hello there!, Tell me what's on your mind!",
+        "Hi there!, Tell me what's on your mind!"
+      ]
+    },
+    {
+      "tag": "goodbye",
+      "patterns": [
+        "bye",
+        "cya",
+        "see you later",
+        "goodbye",
+        "im leaving",
+        "have a good day"
+      ],
+      "responses": [
+        "Goodbye, It was nice talking to you. Type exit to close the window"
+      ]
+    },
+
+    {
+      "tag": "thanks",
+      "patterns": ["thanks", "thank you", "thankyou", "ty", "I owe you one"],
+      "responses": ["You're welcome"]
+    },
+    {
+      "tag": "Suicide",
+      "patterns": [
+        "suicide",
+        "I want to die",
+        "I wanna die",
+        "Kill me",
+        "Just want to end things",
+        "I want to commit suicide"
+      ],
+      "responses": [
+        "Please reach out to helpline: 9152987821, It's necessary for us to not act on thoughts like that"
+      ]
+    },
+    {
+      "tag": "depression",
+      "patterns": [
+        "I've been feeling low",
+        "depressed",
+        "can not feel anything",
+        "I'm sad",
+        "unhappy"
+      ],
+      "responses": [
+        "It's normal to feel low time to time in our life, Why do you feel so?",
+        "Please tell me more, Talking about things are sometimes exactly what we need"
+      ]
+    }
+  ]
+}

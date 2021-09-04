@@ -5,212 +5,15 @@ var natural = require("natural");
 var tokenizer = new natural.WordTokenizer();
 
 //const tf = require("@tensorflow/tfjs");
-//const { tanh } = require("@tensorflow/tfjs");
 const tf = require("@tensorflow/tfjs-node");
 
-const x_train = tf.tensor([
-  [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  ],
-  [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  ],
-  [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0,
-  ],
-  [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  ],
-  [
-    0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  ],
-  [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0,
-  ],
-  [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  ],
-  [
-    0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  ],
-  [
-    0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  ],
-  [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-  ],
-  [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  ],
-  [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0,
-    0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  ],
-  [
-    0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  ],
-  [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  ],
-  [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-  ],
-  [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  ],
-  [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
-  ],
-  [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-  ],
-  [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  ],
-  [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0,
-  ],
-  [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
-    0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0,
-  ],
-  [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-    0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  ],
-  [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0,
-  ],
-  [
-    0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0,
-  ],
-  [
-    0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
-    0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
-  ],
-  [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  ],
-  [
-    0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  ],
-  [
-    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  ],
-  [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,
-  ],
-]);
-
-var y_train = tf.tensor([
-  [0, 0, 0, 1, 0],
-  [0, 0, 0, 1, 0],
-  [0, 0, 0, 1, 0],
-  [0, 0, 0, 1, 0],
-  [0, 0, 0, 1, 0],
-  [0, 0, 0, 1, 0],
-  [0, 0, 0, 1, 0],
-  [0, 0, 1, 0, 0],
-  [0, 0, 1, 0, 0],
-  [0, 0, 1, 0, 0],
-  [0, 0, 1, 0, 0],
-  [0, 0, 1, 0, 0],
-  [0, 0, 1, 0, 0],
-  [0, 0, 0, 0, 1],
-  [0, 0, 0, 0, 1],
-  [0, 0, 0, 0, 1],
-  [0, 0, 0, 0, 1],
-  [0, 0, 0, 0, 1],
-  [1, 0, 0, 0, 0],
-  [1, 0, 0, 0, 0],
-  [1, 0, 0, 0, 0],
-  [1, 0, 0, 0, 0],
-  [1, 0, 0, 0, 0],
-  [1, 0, 0, 0, 0],
-  [0, 1, 0, 0, 0],
-  [0, 1, 0, 0, 0],
-  [0, 1, 0, 0, 0],
-  [0, 1, 0, 0, 0],
-  [0, 1, 0, 0, 0],
-]);
-
-var all_words = [
-  "'m",
-  "a",
-  "anyon",
-  "anyth",
-  "been",
-  "bye",
-  "can",
-  "commit",
-  "cya",
-  "day",
-  "depress",
-  "die",
-  "end",
-  "feel",
-  "good",
-  "goodby",
-  "have",
-  "hello",
-  "hey",
-  "hi",
-  "i",
-  "im",
-  "is",
-  "just",
-  "kill",
-  "later",
-  "leav",
-  "low",
-  "me",
-  "na",
-  "not",
-  "one",
-  "owe",
-  "sad",
-  "see",
-  "suicid",
-  "sup",
-  "thank",
-  "thankyou",
-  "there",
-  "thing",
-  "to",
-  "ty",
-  "unhappi",
-  "up",
-  "ve",
-  "wan",
-  "want",
-  "what",
-  "you",
-];
+const data = require("../Training_data/data");
+const { indexOf } = require("underscore");
+const x_train = data.x_train;
+const y_train = data.y_train;
+const all_words = data.all_words;
+const intent_tags = data.intent_tags;
+const responses = data.responses;
 
 const HIDDEN_SIZE = 5;
 const model = tf.sequential();
@@ -218,22 +21,21 @@ model.add(
   tf.layers.dense({
     inputShape: [50],
     units: 5,
-    activation: "relu"
+    activation: "relu",
   })
 );
 model.add(
   tf.layers.dense({
     units: 5,
-    activation: "relu"
+    activation: "relu",
   })
 );
 model.add(
   tf.layers.dense({
     units: 5,
-    activation: "relu"
+    activation: "relu",
   })
 );
-
 model.add(
   tf.layers.dense({
     units: 5,
@@ -241,12 +43,10 @@ model.add(
   })
 );
 
-
 const ALPHA = 0.1;
 model.compile({
   optimizer: tf.train.sgd(ALPHA),
   loss: "binaryCrossentropy",
-
 });
 
 var trainModel = async () => {
@@ -262,12 +62,6 @@ var trainModel = async () => {
     },
   });
 };
-const test = tf.tensor([
-  [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  ],
-]);
 
 var bag_of_words = async (input_text, all_words) => {
   var tokenized = tokenizer.tokenize(input_text);
@@ -291,13 +85,20 @@ var bag_of_words = async (input_text, all_words) => {
   return bag_of_words;
 };
 
+var return_tag = (array, max) => {
+  const max1 = max.dataSync();
+  const array1 = array.dataSync();
+  for (var i = 0; i < 5; i++) {
+    if (array1[i] == max1) {
+      return intent_tags[i];
+    }
+  }
+};
+
 router.post("/message", async (req, res) => {
   input_message = req.body;
-  console.log(input_message["message"]);
-  var word_bag;
-
   bag_of_words(input_message["message"], all_words).then(async (val) => {
-    word_bag = val;
+    var word_bag = val;
     console.log(word_bag);
     var predict_tensor = tf.tensor([word_bag]);
     try {
@@ -305,20 +106,30 @@ router.post("/message", async (req, res) => {
         "file:///tmp/my-model-1/model.json"
       );
       console.log(Loadedmodel.predict(predict_tensor).print());
-      var predictions = Loadedmodel.predict(predict_tensor);
-      tf.max(predictions).print()
+      var predictions = model.predict(predict_tensor);
+          const resProb = tf.max(predictions).dataSync();
+          if (resProb > 0.75) {
+            var randomResIndex = Math.floor(Math.random() * responses[intent_tags.indexOf(return_tag(predictions, tf.max(predictions)))].length);
+            console.log(randomResIndex);
+            res.send(responses[intent_tags.indexOf(return_tag(predictions, tf.max(predictions)))][randomResIndex]);
+          } else {
+            res.send("Hmm..!, I'm listening. Tell me more!");
+          }
       console.log("Predicted!");
     } catch (e) {
       console.log("Model loading failed");
-      console.log(e);
 
       trainModel().then(async () => {
-        
-
         try {
-          console.log(model.predict(predict_tensor).print());
           var predictions = model.predict(predict_tensor);
-          tf.max(predictions).print()
+          const resProb = tf.max(predictions).dataSync();
+          if (resProb > 0.75) {
+            var randomResIndex = Math.floor(Math.random() * responses[intent_tags.indexOf(return_tag(predictions, tf.max(predictions)))].length);
+            console.log(randomResIndex);
+            res.send(responses[intent_tags.indexOf(return_tag(predictions, tf.max(predictions)))][randomResIndex]);
+          } else {
+            res.send("Hmm..!, I'm listening. Tell me more!");
+          }
           console.log("Trying to save model");
           model.save("file:///tmp/my-model-1").then(() => {
             console.log("Model saved");
