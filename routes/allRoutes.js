@@ -4,7 +4,8 @@ const router = new express.Router();
 var natural = require("natural");
 var tokenizer = new natural.WordTokenizer();
 
-//const tf = require("@tensorflow/tfjs");
+const tf = require("@tensorflow/tfjs");
+//const { tanh } = require("@tensorflow/tfjs");
 const tf = require("@tensorflow/tfjs-node");
 
 const x_train = tf.tensor([
@@ -216,32 +217,42 @@ const model = tf.sequential();
 model.add(
   tf.layers.dense({
     inputShape: [50],
-    units: HIDDEN_SIZE,
+    units: 5,
+    activation: "relu"
   })
 );
 model.add(
   tf.layers.dense({
-    units: HIDDEN_SIZE,
+    units: 5,
+    activation: "relu"
+  })
+);
+model.add(
+  tf.layers.dense({
+    units: 5,
+    activation: "relu"
   })
 );
 
 model.add(
   tf.layers.dense({
-    units: 1,
+    units: 5,
     activation: "softmax",
-    units: HIDDEN_SIZE,
   })
 );
+
 
 const ALPHA = 0.1;
 model.compile({
   optimizer: tf.train.sgd(ALPHA),
-  loss: "meanSquaredError",
+  loss: "binaryCrossentropy",
+
 });
 
 var trainModel = async () => {
   await model.fit(x_train, y_train, {
     epochs: 500,
+    batchSize: 8,
     callbacks: {
       onEpochEnd: async (epoch, logs) => {
         if (epoch % 10 === 0) {
