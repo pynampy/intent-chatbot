@@ -207,7 +207,7 @@ router.post("/message", async (req, res) => {
   try {
     const Loadedmodel = await tf.loadLayersModel("file:///tmp/my-model-1/model.json");
     Loadedmodel.predict(test);
-    console.log('Loading the model');
+    console.log('Predicted!');
   } catch (e) {
       console.log("Model loading failed");
       console.log(e);
