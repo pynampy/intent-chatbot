@@ -1,8 +1,8 @@
 const express = require("express");
 const router = new express.Router();
 
-const tf = require("@tensorflow/tfjs");
-//const tf = require("@tensorflow/tfjs-node");
+//const tf = require("@tensorflow/tfjs");
+const tf = require("@tensorflow/tfjs-node");
 
 const x_train = tf.tensor([
   [
