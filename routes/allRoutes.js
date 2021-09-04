@@ -208,6 +208,7 @@ router.post("/message", upload.single("file"), async (req, res) => {
     const Loadedmodel = await tf.loadLayersModel("file:///tmp/my-model-1");
     Loadedmodel.predict(test)
   } catch {
+      console.log("Model loading failed")
     trainModel().then( async () => {
         await model.save('file:///tmp/my-model-1');
   });
