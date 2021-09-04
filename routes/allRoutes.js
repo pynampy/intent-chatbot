@@ -212,8 +212,11 @@ router.post("/message", async (req, res) => {
       console.log(e)
     trainModel().then( async () => {
         try{
+            console.log('Trying to save model');
             await model.save('file:///tmp/my-model-1');
+            console.log('Model saved');
         }catch(e){
+            console.log("Model not saved")
             console.log(e)
         }
         
