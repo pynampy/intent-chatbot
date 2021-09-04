@@ -205,7 +205,7 @@ const test = tf.tensor([
 
 router.post("/message", async (req, res) => {
   try {
-    const Loadedmodel = await tf.loadLayersModel("file://./tmp/my-model-1");
+    const Loadedmodel = await tf.loadLayersModel("file:///tmp/my-model-1");
     Loadedmodel.predict(test)
   } catch (e) {
       console.log("Model loading failed");
@@ -213,7 +213,7 @@ router.post("/message", async (req, res) => {
     trainModel().then( async () => {
         try{
             console.log('Trying to save model');
-            model.save('file://./tmp/my-model-1').then(()=>{
+            model.save('file:///tmp/my-model-1').then(()=>{
                 console.log('Model saved');
             });
         }catch(e){
