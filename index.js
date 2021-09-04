@@ -105,30 +105,39 @@ model.compile({
   optimizer: tf.train.sgd(ALPHA),
   loss: "meanSquaredError",
 });
-
 var trainModel =  async () =>{
-    await model.fit(x_train, y_train, {
-        epochs: 500,
-        callbacks: {
-          onEpochEnd: async (epoch, logs) => {
-            if (epoch % 10 === 0) {
-              console.log(`Epoch ${epoch}: error: ${logs.loss}`);
-            }
-          },
+  await model.fit(x_train, y_train, {
+      epochs: 500,
+      callbacks: {
+        onEpochEnd: async (epoch, logs) => {
+          if (epoch % 10 === 0) {
+            console.log(`Epoch ${epoch}: error: ${logs.loss}`);
+          }
         },
-      }, );
+      },
+    }, );
 }
+const test = tf.tensor([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]);
 
-trainModel().then( async () => {
+
+
+
+try{
+  const Loadedmodel = await tf.loadLayersModel('file:///tmp/my-model-1');
+  Loadedmodel.predict(test)
+}catch{
+  trainModel().then( async () => {
     await model.save('file:///tmp/my-model-1');
 
-    const test = tf.tensor([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]);
-    
-    
     
     model.predict(test).print()
 });
+}
+
+
+
+
 
 
 
