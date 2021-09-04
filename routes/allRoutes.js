@@ -1,6 +1,9 @@
 const express = require("express");
 const router = new express.Router();
 
+var natural = require("natural");
+var tokenizer = new natural.WordTokenizer();
+
 //const tf = require("@tensorflow/tfjs");
 const tf = require("@tensorflow/tfjs-node");
 
@@ -155,6 +158,59 @@ var y_train = tf.tensor([
   [0, 1, 0, 0, 0],
 ]);
 
+var all_words = [
+  "'m",
+  "a",
+  "anyon",
+  "anyth",
+  "been",
+  "bye",
+  "can",
+  "commit",
+  "cya",
+  "day",
+  "depress",
+  "die",
+  "end",
+  "feel",
+  "good",
+  "goodby",
+  "have",
+  "hello",
+  "hey",
+  "hi",
+  "i",
+  "im",
+  "is",
+  "just",
+  "kill",
+  "later",
+  "leav",
+  "low",
+  "me",
+  "na",
+  "not",
+  "one",
+  "owe",
+  "sad",
+  "see",
+  "suicid",
+  "sup",
+  "thank",
+  "thankyou",
+  "there",
+  "thing",
+  "to",
+  "ty",
+  "unhappi",
+  "up",
+  "ve",
+  "wan",
+  "want",
+  "what",
+  "you",
+];
+
 const HIDDEN_SIZE = 5;
 const model = tf.sequential();
 model.add(
@@ -183,7 +239,6 @@ model.compile({
   loss: "meanSquaredError",
 });
 
-
 var trainModel = async () => {
   await model.fit(x_train, y_train, {
     epochs: 500,
@@ -203,33 +258,66 @@ const test = tf.tensor([
   ],
 ]);
 
+var bag_of_words = async (input_text, all_words) => {
+  var tokenized = tokenizer.tokenize(input_text);
+  var input_text_stemmed = [];
+  tokenized.forEach((word) => {
+    input_text_stemmed.push(natural.PorterStemmer.stem(word));
+  });
+
+  var bag_of_words = [];
+
+  for (var i = 0; i < all_words.length; i++) {
+    bag_of_words.push(0);
+  }
+
+  for (var i = 0; i < input_text_stemmed.length; i++) {
+    if (all_words.includes(input_text_stemmed[i])) {
+      bag_of_words[all_words.indexOf(input_text_stemmed[i])] = 1;
+    }
+  }
+
+  return bag_of_words;
+};
+
 router.post("/message", async (req, res) => {
-  try {
-    const Loadedmodel = await tf.loadLayersModel("file:///tmp/my-model-1/model.json");
-    Loadedmodel.predict(test);
-    console.log('Predicted!');
-  } catch (e) {
+  input_message = req.body;
+  console.log(input_message["message"]);
+  var word_bag;
+
+  bag_of_words(input_message["message"], all_words).then(async (val) => {
+    word_bag = val;
+    console.log(word_bag);
+    try {
+      const Loadedmodel = await tf.loadLayersModel(
+        "file:///tmp/my-model-1/model.json"
+      );
+      Loadedmodel.predict(test);
+      console.log("Predicted!");
+    } catch (e) {
       console.log("Model loading failed");
       console.log(e);
 
-    trainModel().then( async () => {
-        try{
-            console.log('Trying to save model');
-            model.save('file:///tmp/my-model-1').then(()=>{
-                console.log('Model saved');
-            });
-        }catch(e){
-            console.log("Model not saved")
-            console.log(e)
+      trainModel().then(async () => {
+        var predict_tensor = tf.tensor([word_bag]);
+
+        try {
+          console.log(model.predict(predict_tensor).print());
+          var predictions = model.predict(predict_tensor);
+          tf.max(predictions).print()
+          console.log("Trying to save model");
+          model.save("file:///tmp/my-model-1").then(() => {
+            console.log("Model saved");
+          });
+        } catch (e) {
+          console.log("Model not saved");
+          console.log(e);
         }
-        
+      });
+    }
   });
-}
-}
-);
+});
 
-
-module.exports = { 
-    router,
-  };
-  
+module.exports = {
+  router,
+};
